@@ -104,7 +104,7 @@ export async function logIn(email, password) {
 }
 
 export async function logInGoogle() {
-  if (mode !== "firebase") throw new Error("Google sign-in needs Firebase. Add your config in js/firebase-config.js.");
+  if (mode !== "firebase") throw new Error("Google sign-in needs Firebase. Add your config in firebase-config.js.");
   try {
     const provider = new fb.auth.GoogleAuthProvider();
     const cred = await fb.auth.signInWithPopup(fb.a, provider);

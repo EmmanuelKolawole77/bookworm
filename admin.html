@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link href="css/style.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
   <link href="admin.css" rel="stylesheet">
 </head>
 <body class="admin-body">
@@ -64,27 +64,27 @@
     <main class="container-xl admin-main">
       <div class="alert alert-warning d-none" id="demoBanner">
         Demo mode: data is stored in this browser only, and any logged-in user counts as admin.
-        Connect Firebase in <code>js/firebase-config.js</code> for the real thing.
+        Connect Firebase in <code>firebase-config.js</code> for the real thing.
       </div>
 
       <!-- Overview -->
       <section data-panel="overview">
-        <div class="stat-grid" id="stats"></div>
+        <div class="stat-grid reveal" id="stats"></div>
         <div class="row g-4 mt-1">
           <div class="col-lg-7">
-            <div class="panel">
+            <div class="panel reveal delay-100">
               <h2>Revenue, last 7 days</h2>
               <div class="bars" id="bars"></div>
             </div>
           </div>
           <div class="col-lg-5">
-            <div class="panel">
+            <div class="panel reveal delay-200">
               <h2>Top sellers</h2>
               <ol class="rank" id="topSellers"></ol>
             </div>
           </div>
         </div>
-        <div class="panel mt-4">
+        <div class="panel mt-4 reveal delay-300">
           <h2>Needs attention</h2>
           <ul class="plain-list" id="attention"></ul>
         </div>

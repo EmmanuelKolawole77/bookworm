@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your Cart | Bookworm</title>
-  <meta name="description" content="Review your book order and check out with Bookworm.">
+  <title>Reader Reviews | Ìwé Books</title>
+  <meta name="description" content="Reviews from readers who shop with Ìwé Books.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="style (3).css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
 </head>
-<body data-page="cart">
-  <div class="promo-bar">Free delivery on orders over ₦40,000 · Part of every sale funds the Bookworm Foundation</div>
+<body>
+  <div class="promo-bar">Free delivery on orders over ₦40,000 · Part of every sale funds the Ìwé Foundation</div>
   <nav class="navbar navbar-expand-lg site-nav sticky-top" aria-label="Main navigation">
     <div class="container">
-      <a class="navbar-brand" href="index (5).html#home">Bookworm</a>
+      <a class="navbar-brand" href="index.html#home">Ìwé Books</a>
+      <div class="nav-icons d-lg-none"><a class="icon-btn" href="cart.html" aria-label="Open cart"><i class="bi bi-bag" aria-hidden="true"></i></a></div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Open menu"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-lg-auto align-items-lg-center">
-          <li class="nav-item"><a class="nav-link" href="index (5).html#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="index (5).html#shop">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#shop">Shop</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="reviews.html">Reviews</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="reviews.html">Reviews</a></li>
           <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="cart.html">Cart</a></li>
+          <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+          <li class="nav-item d-none d-lg-block"><a class="icon-btn" href="cart.html" aria-label="Open cart"><i class="bi bi-bag" aria-hidden="true"></i></a></li>
           <li class="nav-item ms-lg-2" id="navLoggedOut"><button type="button" class="btn-solid btn-small" data-auth-open="login">Log in</button></li>
           <li class="nav-item dropdown ms-lg-2 d-none" id="navLoggedIn">
             <a class="nav-link dropdown-toggle account-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle" aria-hidden="true"></i> <span id="navUserName">Account</span></a>
@@ -35,31 +37,34 @@
       </div>
     </div>
   </nav>
-  <main class="section">
-    <div class="container">
-      <div class="section-head"><h1>Your cart</h1><a class="link-plain" href="index (5).html#shop">Continue shopping</a></div>
-      <section id="cartDrawer" class="cart-page" aria-label="Shopping cart">
-        <div class="offcanvas-body">
-          <div id="cartEmpty" class="cart-empty"><i class="bi bi-bag" aria-hidden="true"></i><p>Your cart is empty.</p><a class="btn-solid btn-small" href="index (5).html#shop">Browse books</a></div>
-          <ul class="cart-list" id="cartList"></ul>
-        </div>
-        <div class="offcanvas-footer" id="cartFooter">
-          <dl class="cart-totals"><div><dt>Subtotal</dt><dd id="cartSubtotal">₦0</dd></div><div><dt>Delivery</dt><dd id="cartDelivery">₦0</dd></div><div class="total"><dt>Total</dt><dd id="cartTotal">₦0</dd></div></dl>
-          <p class="free-note" id="freeNote"></p><button type="button" class="btn-solid btn-wide" id="checkoutBtn">Pay with Paystack</button><p class="summary-note">Test mode: no real money is charged.</p>
-        </div>
-      </section>
-    </div>
+  <main>
+    <section class="section section-grey">
+      <div class="container">
+        <div class="section-head reveal"><h1>What readers say</h1><button type="button" class="link-button" id="writeReviewBtn">Write a review</button></div>
+        <div class="row g-4 reveal delay-100" id="reviewGrid"></div>
+      </div>
+    </section>
   </main>
   <footer class="site-footer">
     <div class="container">
       <div class="row gy-4">
         <div class="col-md-6"><p class="footer-brand">Ìwé Books</p><p>Nigerian stories, delivered to your door.</p></div>
-        <div class="col-6 col-md-3"><ul class="footer-links"><li><a href="index (5).html#home">Home</a></li><li><a href="index (5).html#shop">Shop</a></li><li><a href="about.html">About</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="blog.html">Blog</a></li></ul></div>
+        <div class="col-6 col-md-3"><ul class="footer-links"><li><a href="index.html#home">Home</a></li><li><a href="index.html#shop">Shop</a></li><li><a href="about.html">About</a></li><li><a href="blog.html">Blog</a></li><li><a href="cart.html">Cart</a></li></ul></div>
         <div class="col-6 col-md-3"><ul class="footer-links"><li>hello@iwebooks.example</li><li>+234 800 000 0000</li><li>Lagos, Nigeria</li></ul></div>
       </div>
       <p class="footer-copy">© 2026 Ìwé Books. Placeholder content for a student project.</p>
     </div>
   </footer>
+  <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content login-modal">
+      <div class="modal-header"><h2 class="modal-title" id="reviewTitle">Write a review</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body"><form id="reviewForm" novalidate>
+        <div class="mb-3"><label for="reviewRating" class="form-label">Rating</label><select id="reviewRating" class="form-select"><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select></div>
+        <div class="mb-3"><label for="reviewText" class="form-label">Your review</label><textarea id="reviewText" class="form-control" rows="4" maxlength="400" required></textarea></div>
+        <button type="submit" class="btn-solid btn-wide">Post review</button>
+      </form></div>
+    </div></div>
+  </div>
   <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"><div class="modal-content login-modal">
       <div class="modal-header"><h2 class="modal-title" id="authTitle">Log in</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -78,7 +83,6 @@
   </div>
   <div class="modal fade" id="ordersModal" tabindex="-1" aria-labelledby="ordersTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"><div class="modal-content login-modal"><div class="modal-header"><h2 class="modal-title" id="ordersTitle">My orders</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body" id="ordersBody"></div></div></div></div>
   <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
-  <script src="https://js.paystack.co/v1/inline.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="app.js"></script>
 </body>

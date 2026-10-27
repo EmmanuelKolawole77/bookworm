@@ -7,7 +7,7 @@
 // 5. Create a Firestore database, then paste firestore.rules into its Rules tab.
 //
 // Until you do this, the site runs in DEMO MODE: books come from
-// js/books-seed.js, and accounts, cart and orders are stored in the
+// books-seed.js, and accounts, cart and orders are stored in the
 // browser only. Nothing breaks.
 // =====================================================================
 

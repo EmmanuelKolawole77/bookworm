@@ -381,13 +381,32 @@ function bind() {
   });
 }
 
+function initScrollObserver() {
+  const elements = $$(".reveal");
+  if (!elements.length) return;
+  if (!("IntersectionObserver" in window)) {
+    elements.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  elements.forEach((el) => observer.observe(el));
+}
+
 async function start() {
   bind();
   if (store.mode === "demo") $("#gateNote").textContent = "Demo mode: create an account on the shop first, then sign in here with it.";
-  try { await store.init(); } catch (e) { console.error(e); showGate("Could not reach Firebase. Check js/firebase-config.js."); return; }
+  try { await store.init(); } catch (e) { console.error(e); showGate("Could not reach Firebase. Check firebase-config.js."); return; }
   store.onAuth(onUser);
   const hash = location.hash.slice(1);
   if (["overview", "books", "orders", "reviews", "customers"].includes(hash)) showTab(hash);
+  initScrollObserver();
 }
 
 start();
