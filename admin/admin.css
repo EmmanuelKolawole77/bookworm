@@ -1,0 +1,101 @@
+/* Admin dashboard. Same rule as the shop: no CSS variables. */
+
+.admin-body { background: #f7f7f5; min-height: 100vh; }
+
+/* ---------- Gate ---------- */
+.gate { display: grid; place-items: center; min-height: 100vh; padding: 1.5rem; background: #f7f7f5; }
+.gate-card { width: 100%; max-width: 420px; padding: 2.2rem; background: #ffffff; border: 1px solid #e6e6e6; border-radius: 6px; }
+.gate-card h1 { margin-bottom: 0.4rem; font-size: 1.8rem; }
+.gate-card .muted { margin-bottom: 1.4rem; }
+.gate-card .form-control { padding: 0.65rem 0.8rem; border: 1px solid #cccccc; border-radius: 4px; }
+.gate-card .form-control:focus { border-color: #1f4d3a; box-shadow: 0 0 0 3px rgba(31, 77, 58, 0.2); }
+
+/* ---------- Top bar and tabs ---------- */
+.admin-top { background: #ffffff; border-bottom: 1px solid #e6e6e6; position: sticky; top: 0; z-index: 100; }
+.admin-top-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1.5rem; padding: 0.9rem 0.75rem 0.4rem; }
+.admin-brand { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; }
+.admin-brand span { margin-left: 0.3rem; padding: 0.05rem 0.55rem; border-radius: 999px; background: #e3f1ea; color: #1f4d3a; font-size: 0.75rem; font-weight: 700; letter-spacing: 0; vertical-align: middle; }
+.admin-user { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.2rem; font-size: 0.95rem; }
+
+.admin-tabs { display: flex; gap: 0.3rem 1.6rem; margin: 0; padding: 0 0.75rem; list-style: none; overflow-x: auto; }
+.tab {
+  padding: 0.6rem 0; border: 0; border-bottom: 2px solid transparent; background: none;
+  color: #777777; font-size: 1rem; font-weight: 500; white-space: nowrap; cursor: pointer;
+}
+.tab:hover { color: #111111; }
+.tab.is-active { border-bottom-color: #1f4d3a; color: #111111; }
+
+.admin-main { padding-top: 2rem; padding-bottom: 4rem; }
+
+/* ---------- Panels ---------- */
+.panel { padding: 1.5rem; background: #ffffff; border: 1px solid #e6e6e6; border-radius: 6px; height: 100%; }
+.panel h2, .panel-head h2 { font-size: 1.25rem; font-weight: 600; }
+.panel h2 { margin-bottom: 1.1rem; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem 1.5rem; margin-bottom: 1.2rem; }
+.panel-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.panel-actions .form-control, .panel-actions .form-select { padding: 0.45rem 0.8rem; border: 1px solid #cccccc; border-radius: 4px; min-width: 190px; }
+
+/* ---------- Stats ---------- */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.stat { padding: 1.3rem 1.4rem; background: #ffffff; border: 1px solid #e6e6e6; border-radius: 6px; }
+.stat span { display: block; color: #777777; font-size: 0.9rem; }
+.stat strong { display: block; margin-top: 0.2rem; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+.stat small { color: #777777; font-size: 0.85rem; }
+
+.bars { display: flex; align-items: flex-end; gap: 0.7rem; height: 210px; padding-top: 1.5rem; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0; }
+.bar-val { margin-bottom: 0.3rem; color: #555555; font-size: 0.72rem; white-space: nowrap; }
+.bar { width: 100%; max-width: 48px; min-height: 3px; border-radius: 3px 3px 0 0; background: #1f4d3a; }
+.bar.is-zero { background: #dddddd; }
+.bar-label { margin-top: 0.5rem; color: #777777; font-size: 0.8rem; }
+
+.rank { margin: 0; padding-left: 1.3rem; }
+.rank li { padding: 0.4rem 0; }
+.rank li span { float: right; color: #777777; font-size: 0.93rem; }
+
+.plain-list { margin: 0; padding: 0; list-style: none; }
+.plain-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid #eeeeee; }
+.plain-list li:last-child { border-bottom: 0; }
+.empty { padding: 1.5rem 0; color: #777777; text-align: center; }
+
+/* ---------- Tables ---------- */
+.table-wrap { overflow-x: auto; background: #ffffff; border: 1px solid #e6e6e6; border-radius: 6px; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.admin-table th { padding: 0.8rem 1rem; border-bottom: 1px solid #e6e6e6; color: #777777; font-size: 0.82rem; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.admin-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #f0f0ee; vertical-align: middle; }
+.admin-table tr:last-child td { border-bottom: 0; }
+.admin-table .num { text-align: right; white-space: nowrap; }
+.admin-table .row-actions { text-align: right; white-space: nowrap; }
+.admin-table .thumb { width: 36px; height: 54px; object-fit: cover; border-radius: 3px; background: #1f4d3a; }
+.admin-table .sub { display: block; color: #777777; font-size: 0.85rem; }
+.low { color: #a32020; font-weight: 700; }
+.row-actions button { margin-left: 0.8rem; }
+.danger { color: #a32020; }
+.danger:hover { color: #6b0f0f; }
+
+/* ---------- Orders ---------- */
+.order-card { margin-bottom: 1rem; padding: 1.2rem 1.4rem; background: #ffffff; border: 1px solid #e6e6e6; border-radius: 6px; }
+.order-card header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1.2rem; }
+.order-card .who { color: #777777; font-size: 0.92rem; }
+.order-card ul { margin: 0.9rem 0; padding: 0; list-style: none; color: #555555; }
+.order-card li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.15rem 0; }
+.order-card footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1.2rem; padding-top: 0.8rem; border-top: 1px solid #eeeeee; }
+.order-card select { padding: 0.35rem 0.7rem; border: 1px solid #cccccc; border-radius: 4px; background: #ffffff; font-size: 0.93rem; }
+.pill { padding: 0.05rem 0.6rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700; text-transform: capitalize; }
+.pill-paid { background: #e3f1ea; color: #1f4d3a; }
+.pill-processing { background: #fff3cd; color: #7a5b00; }
+.pill-shipped { background: #dbeafe; color: #1e40af; }
+.pill-delivered { background: #1f4d3a; color: #ffffff; }
+.pill-cancelled { background: #fde2e2; color: #a32020; }
+
+/* ---------- Reviews ---------- */
+.review-row { display: flex; justify-content: space-between; gap: 1.5rem; margin-bottom: 0.8rem; padding: 1.1rem 1.3rem; background: #ffffff; border: 1px solid #e6e6e6; border-radius: 6px; }
+.review-row p { margin: 0.3rem 0; color: #333333; }
+
+.cover-preview img { width: 70px; height: 105px; margin-top: 0.6rem; object-fit: cover; border-radius: 3px; background: #1f4d3a; }
+
+@media (max-width: 575.98px) {
+  .admin-main { padding-top: 1.2rem; }
+  .bars { gap: 0.3rem; }
+  .bar-val { display: none; }
+}
