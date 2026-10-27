@@ -42,7 +42,8 @@ function toast(message, type = "ok") {
 }
 
 const modal = (id) => bootstrap.Modal.getOrCreateInstance($(id));
-const drawer = () => bootstrap.Offcanvas.getOrCreateInstance($("#cartDrawer"));
+const isCartPage = document.body.dataset.page === "cart";
+const drawer = () => isCartPage ? { show() {}, hide() {} } : bootstrap.Offcanvas.getOrCreateInstance($("#cartDrawer"));
 
 /* ------------------------------ state ------------------------------ */
 
@@ -182,10 +183,10 @@ function renderCart() {
     el.classList.toggle("is-empty", count === 0);
   });
 
-  $("#cartEmpty").classList.toggle("d-none", lines.length > 0);
-  $("#cartFooter").classList.toggle("d-none", lines.length === 0);
+  $("#cartEmpty")?.classList.toggle("d-none", lines.length > 0);
+  $("#cartFooter")?.classList.toggle("d-none", lines.length === 0);
 
-  $("#cartList").innerHTML = lines
+  if ($("#cartList")) $("#cartList").innerHTML = lines
     .map(
       (l) => `
       <li class="cart-row">
@@ -206,14 +207,14 @@ function renderCart() {
       </li>`
     )
     .join("");
-  guardImages($("#cartList"));
+  if ($("#cartList")) guardImages($("#cartList"));
 
   const t = totals();
-  $("#cartSubtotal").textContent = naira(t.subtotal);
-  $("#cartDelivery").textContent = t.delivery === 0 ? "Free" : naira(t.delivery);
-  $("#cartTotal").textContent = naira(t.total);
+  if ($("#cartSubtotal")) $("#cartSubtotal").textContent = naira(t.subtotal);
+  if ($("#cartDelivery")) $("#cartDelivery").textContent = t.delivery === 0 ? "Free" : naira(t.delivery);
+  if ($("#cartTotal")) $("#cartTotal").textContent = naira(t.total);
   const left = FREE_DELIVERY_OVER - t.subtotal;
-  $("#freeNote").textContent =
+  if ($("#freeNote")) $("#freeNote").textContent =
     t.subtotal === 0 ? "" : left > 0 ? `Add ${naira(left)} more for free delivery.` : "You have free delivery.";
 }
 
@@ -253,6 +254,7 @@ function mergeCarts(a, b) {
 async function checkout() {
   if (!state.user) {
     toast("Please log in to check out.", "warn");
+    if (isCartPage) return openAuth("login");
     const el = $("#cartDrawer");
     el.addEventListener("hidden.bs.offcanvas", () => openAuth("login"), { once: true });
     return drawer().hide();
@@ -351,10 +353,13 @@ async function onUserChange(user) {
   state.user = user;
   $("#navLoggedOut").classList.toggle("d-none", !!user);
   $("#navLoggedIn").classList.toggle("d-none", !user);
-  if (!user) $("#adminLink").classList.add("d-none");
-  if (user) {
+  if (!user) {
+    if ($("#adminLink")) $("#adminLink").classList.add("d-none");
+  } else {
     $("#navUserName").textContent = (user.name || user.email).split(" ")[0];
-    store.getRole(user).then((role) => $("#adminLink").classList.toggle("d-none", role !== "admin"));
+    if ($("#adminLink")) {
+      store.getRole(user).then((role) => $("#adminLink").classList.toggle("d-none", role !== "admin")).catch(() => {});
+    }
     if (wasLoggedOut) {
       const remote = await store.loadRemoteCart(user);
       if (remote) {
@@ -450,35 +455,35 @@ function bindEvents() {
     else if (t.dataset.authOpen) openAuth(t.dataset.authOpen);
   });
 
-  $("#cartBrowse").addEventListener("click", () => { location.hash = "#shop"; });
-  $("#searchInput").addEventListener("input", (e) => { state.query = e.target.value; renderShop(); });
-  $("#sortSelect").addEventListener("change", (e) => { state.sort = e.target.value; renderShop(); });
-  $("#checkoutBtn").addEventListener("click", checkout);
+  $("#cartBrowse")?.addEventListener("click", () => { location.href = "index.html#shop"; });
+  $("#searchInput")?.addEventListener("input", (e) => { state.query = e.target.value; renderShop(); });
+  $("#sortSelect")?.addEventListener("change", (e) => { state.sort = e.target.value; renderShop(); });
+  $("#checkoutBtn")?.addEventListener("click", checkout);
 
-  $("#authForm").addEventListener("submit", submitAuth);
-  $("#googleBtn").addEventListener("click", async () => {
+  $("#authForm")?.addEventListener("submit", submitAuth);
+  $("#googleBtn")?.addEventListener("click", async () => {
     setAuthMessage();
     try { await store.logInGoogle(); modal("#authModal").hide(); } catch (err) { setAuthMessage("error", err.message); }
   });
-  $("#forgotBtn").addEventListener("click", async () => {
+  $("#forgotBtn")?.addEventListener("click", async () => {
     const email = $("#authEmail").value.trim();
     if (!email) return setAuthMessage("error", "Type your email above first, then press this again.");
     try { await store.resetPassword(email); setAuthMessage("info", "Reset link sent. Check your inbox."); }
     catch (err) { setAuthMessage("error", err.message); }
   });
-  $("#logoutBtn").addEventListener("click", async () => {
+  $("#logoutBtn")?.addEventListener("click", async () => {
     await store.logOut();
     toast("You are logged out.");
   });
-  $("#openOrders").addEventListener("click", showOrders);
+  $("#openOrders")?.addEventListener("click", showOrders);
 
-  $("#writeReviewBtn").addEventListener("click", () => {
+  $("#writeReviewBtn")?.addEventListener("click", () => {
     if (!state.user) { toast("Log in to write a review.", "warn"); return openAuth("login"); }
     modal("#reviewModal").show();
   });
-  $("#reviewForm").addEventListener("submit", submitReview);
+  $("#reviewForm")?.addEventListener("submit", submitReview);
 
-  $("#newsletterForm").addEventListener("submit", (e) => {
+  $("#newsletterForm")?.addEventListener("submit", (e) => {
     e.preventDefault();
     const input = $("#newsletterEmail");
     if (!input.checkValidity() || !input.value) return toast("Enter a valid email address.", "warn");
@@ -489,9 +494,30 @@ function bindEvents() {
 
 /* ------------------------------ start ------------------------------ */
 
+function initScrollObserver() {
+  const elements = $$(".reveal");
+  if (!elements.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    elements.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+  elements.forEach((el) => observer.observe(el));
+}
+
 async function start() {
   bindEvents();
-  $("#modeBadge").textContent = store.mode === "demo" ? "Demo mode: connect Firebase in js/firebase-config.js." : "";
+  if ($("#modeBadge")) $("#modeBadge").textContent = store.mode === "demo" ? "Demo mode: connect Firebase in firebase-config.js." : "";
 
   try {
     await store.init();
@@ -501,13 +527,15 @@ async function start() {
   }
 
   state.books = await store.getBooks();
-  renderFilters();
-  renderHome();
-  renderShop();
-  renderCart();
-  renderReviews();
+  if ($("#filters")) renderFilters();
+  if ($("#featuredGrid") && $("#heroStack")) renderHome();
+  if ($("#bookGrid")) renderShop();
+  if ($("#cartList")) renderCart();
+  if ($("#reviewGrid")) renderReviews();
 
-  store.onAuth(onUserChange);
+  if ($("#navLoggedOut") && $("#navLoggedIn")) store.onAuth(onUserChange);
+
+  initScrollObserver();
 }
 
 // Handy from the console once you are an admin: seedBooks()
